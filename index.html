@@ -1,0 +1,307 @@
+﻿<!DOCTYPE html>
+<html lang="en" style="scroll-behavior: smooth;">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Playbyte Studios — Flyra</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg: #070b14;
+    --card: rgba(15, 23, 36, 0.65);
+    --muted: #8b9bb4;
+    --accent: #ff6b3d;
+    --accent-glow: rgba(255, 107, 61, 0.4);
+    --text: #e6eef6;
+  }
+  
+  * { box-sizing: border-box; }
+  
+  body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    /* Subtle tech grid background */
+    background-image: 
+      linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  h1, h2, h3 {
+    font-family: 'Orbitron', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* Header / Nav */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 16px 40px;
+    background: rgba(7, 11, 20, 0.8);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  }
+  
+  .brand { display: flex; align-items: center; gap: 16px; }
+  .brand img { height: 44px; width: auto; border-radius: 8px; }
+  .brand h1 { font-size: 20px; margin: 0; color: #fff; text-shadow: 0 0 10px rgba(255,255,255,0.2); }
+  
+  nav { display: flex; align-items: center; }
+  nav a { color: var(--muted); text-decoration: none; margin-left: 24px; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  nav a:hover { color: #fff; }
+  nav a.cta { 
+    background: transparent; 
+    border: 1px solid var(--accent);
+    color: var(--accent); 
+    padding: 8px 16px; 
+    border-radius: 4px; 
+    margin-left: 28px;
+    text-transform: uppercase;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+  }
+  nav a.cta:hover {
+    background: var(--accent);
+    color: #000;
+    box-shadow: 0 0 15px var(--accent-glow);
+  }
+
+  main { max-width: 1200px; margin: 40px auto; padding: 0 24px; }
+
+  /* Sections & Animations */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Hero */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 460px;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 60px;
+    padding: 40px 0;
+  }
+  @media (max-width: 960px) { .hero { grid-template-columns: 1fr; text-align: center; } .hero-right { order: -1; } .buttons { justify-content: center; } }
+
+  .hero-left h2 { font-size: 42px; margin: 0 0 16px; line-height: 1.1; color: #fff; text-shadow: 0 0 20px rgba(255,255,255,0.1); }
+  .hero-left p { color: var(--muted); font-size: 18px; line-height: 1.6; margin: 0 0 28px; max-width: 600px; }
+  
+  .buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn { 
+    display: inline-block; padding: 14px 24px; border-radius: 6px; 
+    text-decoration: none; font-weight: 600; font-family: 'Orbitron', sans-serif;
+    letter-spacing: 0.5px; transition: all 0.3s ease; text-transform: uppercase; font-size: 14px;
+  }
+  .btn.primary { background: var(--accent); color: #000; box-shadow: 0 0 15px var(--accent-glow); }
+  .btn.primary:hover { transform: translateY(-2px); box-shadow: 0 0 25px var(--accent-glow); }
+  .btn.ghost { border: 1px solid rgba(255,255,255,0.15); color: #fff; background: rgba(255,255,255,0.02); }
+  .btn.ghost:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.3); }
+
+  .hero-right { position: relative; }
+  .hero-right::after {
+    content: ''; position: absolute; top: -20px; left: -20px; right: -20px; bottom: -20px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    z-index: -1; filter: blur(30px);
+  }
+  .capsule { width: 100%; border-radius: 12px; display: block; box-shadow: 0 20px 40px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.05); }
+
+  /* Generic Section */
+  .section { 
+    margin: 40px 0; 
+    background: var(--card); 
+    padding: 32px; 
+    border-radius: 16px; 
+    border: 1px solid rgba(255,255,255,0.03);
+    backdrop-filter: blur(10px);
+  }
+  .section h3 { font-size: 24px; margin: 0 0 20px 0; color: #fff; display: flex; align-items: center; gap: 10px;}
+  .section h3::before { content: ''; display: inline-block; width: 8px; height: 24px; background: var(--accent); border-radius: 2px;}
+
+  /* Gallery */
+  .gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 880px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .gallery-grid { grid-template-columns: 1fr; } }
+  
+  .gallery-grid img { 
+    width: 100%; height: 200px; object-fit: cover; border-radius: 8px; 
+    cursor: pointer; display: block; transition: all 0.3s ease;
+    border: 1px solid rgba(255,255,255,0.05);
+  }
+  .gallery-grid img:hover { transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.5); border-color: var(--accent); z-index: 2; position: relative;}
+
+  /* Lightbox */
+  .lightbox { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(0,0,0,0.9); z-index: 9999; backdrop-filter: blur(5px); }
+  .lightbox.open { display: flex; animation: fadeIn 0.2s ease; }
+  @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+  .lightbox img { max-width: 90%; max-height: 90%; border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); border: 1px solid rgba(255,255,255,0.1);}
+  .close { position: absolute; top: 30px; right: 30px; color: #fff; background: rgba(255,255,255,0.1); border:none; font-size: 20px; border-radius: 8px; width: 44px; height: 44px; cursor: pointer; transition: background 0.2s;}
+  .close:hover { background: var(--accent); color: #000; }
+
+  /* Video */
+  .video-wrap { position: relative; padding-bottom: 56.25%; /* 16:9 Aspect Ratio */ height: 0; overflow: hidden; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); box-shadow: 0 10px 30px rgba(0,0,0,0.5);}
+  .video-wrap video, .video-wrap iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; }
+
+  /* Footer */
+  footer { color: var(--muted); text-align: center; padding: 40px 0; font-size: 14px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 60px;}
+  .small { font-size: 14px; color: var(--muted); line-height: 1.5;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand">
+    <img src="logo.png" alt="Playbyte Studios logo">
+    <div>
+      <h1>Playbyte Studios</h1>
+      <div class="small" style="font-family: 'Inter', sans-serif; font-size: 12px;">Indie Studio — Flyra</div>
+    </div>
+  </div>
+
+  <nav>
+    <a href="#game">Game</a>
+    <a href="#media">Media</a>
+    <a href="#press">Press</a>
+    <a class="cta" href="https://store.steampowered.com/app/4075900" target="_blank" rel="noreferrer">Wishlist</a>
+  </nav>
+</header>
+
+<main>
+
+  <section id="game" class="hero fade-in">
+    <div class="hero-left">
+      <h2>Flyra <br><span style="color: var(--accent); font-size: 28px;">High-Speed FPV Drone Simulator</span></h2>
+      <p>Pilot drones through underground tunnels and hostile environments. Master realistic physics, survive intense atmospheres, and execute pixel-perfect maneuvers.</p>
+
+      <div class="buttons">
+        <a class="btn primary" href="https://store.steampowered.com/app/4075900" target="_blank" rel="noreferrer">View on Steam</a>
+        <a class="btn ghost" href="#media">Watch Trailer</a>
+      </div>
+
+      <div style="margin-top:24px; color:var(--muted); font-size:13px; font-weight: 500; letter-spacing: 0.5px; text-transform: uppercase;">
+        <span style="color: #fff;">Genre:</span> Simulation &nbsp;|&nbsp; <span style="color: #fff;">Platform:</span> PC &nbsp;|&nbsp; <span style="color: #fff;">Release:</span> 2026
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <img class="capsule" src="capsule.png" alt="Flyra capsule image">
+    </div>
+  </section>
+
+  <section id="media" class="section fade-in">
+    <h3>Official Trailer</h3>
+    <div class="video-wrap">
+      <video controls poster="capsule.png">
+        <source src="video/trailer.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+
+  <section class="section fade-in">
+    <h3>Transmission Logs (Screenshots)</h3>
+    <div class="gallery-grid">
+      <img src="screenshots/shot1.png" alt="Gameplay screenshot 1" data-full="screenshots/shot1.png">
+      <img src="screenshots/shot2.png" alt="Gameplay screenshot 2" data-full="screenshots/shot2.png">
+      <img src="screenshots/shot3.png" alt="Gameplay screenshot 3" data-full="screenshots/shot3.png">
+      <img src="screenshots/shot4.png" alt="Gameplay screenshot 4" data-full="screenshots/shot4.png">
+      <img src="screenshots/shot5.png" alt="Gameplay screenshot 5" data-full="screenshots/shot5.png">
+      <img src="screenshots/shot6.png" alt="Gameplay screenshot 6" data-full="screenshots/shot6.png">
+    </div>
+  </section>
+
+  <section id="press" class="section fade-in" style="display:flex; gap:40px; align-items:flex-start; flex-wrap:wrap">
+    <div style="flex:1; min-width:280px">
+      <h3>Press Kit</h3>
+      <p class="small">Download transparent logos, uncompressed high-res screenshots, and a short description document for press, media, and content creators.</p>
+      <p style="margin-top:20px"><a class="btn ghost" href="#">Download .ZIP</a></p>
+    </div>
+
+    <div style="flex:1; min-width:280px">
+      <h3>Contact Comms</h3>
+      <p class="small">For press inquiries, brand partnerships, and publishing opportunities, reach out to our team:</p>
+      <p style="margin-top:16px; font-size: 18px; font-weight: 600; color: #fff;">press@playbytestudios.com</p>
+    </div>
+  </section>
+
+</main>
+
+<div id="lightbox" class="lightbox" role="dialog" aria-hidden="true">
+  <button id="closeBtn" class="close" aria-label="Close">✕</button>
+  <img id="lightboxImg" src="" alt="Expanded screenshot">
+</div>
+
+<footer>
+  © <span id="year"></span> Playbyte Studios · Flyra FPV Simulator
+</footer>
+
+<script>
+  // Set current year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Scroll Fade-in Animation Observer
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+
+  // Lightbox functionality
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightboxImg');
+  const closeBtn = document.getElementById('closeBtn');
+
+  document.querySelectorAll('.gallery-grid img').forEach(img => {
+    img.addEventListener('click', () => {
+      const full = img.getAttribute('data-full') || img.src;
+      lbImg.src = full;
+      lightbox.classList.add('open');
+      lightbox.setAttribute('aria-hidden', 'false');
+    });
+  });
+
+  const closeLightbox = () => {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+    setTimeout(() => lbImg.src = '', 200); // Wait for animation to finish before clearing
+  };
+
+  closeBtn.addEventListener('click', closeLightbox);
+
+  // Close lightbox with Esc or clicking outside the image
+  lightbox.addEventListener('click', (e) => {
+    if(e.target === lightbox) { closeLightbox(); }
+  });
+  
+  document.addEventListener('keydown', (e) => {
+    if(e.key === 'Escape' && lightbox.classList.contains('open')) { closeLightbox(); }
+  });
+</script>
+
+</body>
+</html>
